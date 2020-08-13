@@ -11,7 +11,7 @@ const app = Express();
 const port = process.env.PORT;
 
 app.use(Express.json());
-app.use(Express.urlencoded({ extended: false }));
+app.use(Express.urlencoded({ extended: true }));
 
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,

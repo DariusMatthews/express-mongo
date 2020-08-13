@@ -6,17 +6,21 @@ const router = Express.Router();
 
 router.get('/', (req, res) => {
   User.find()
-    .then(users => res.json(users));
+    .then(users => res.json(users))
+    .catch(err => { throw err });
 });
 
 router.post('/', (req, res) => {
-  const newUser = new User({
-    id: uuidv4(),
-    name: req.body.name,
-  });
+  const newUser = new User(
+    {
+      id: uuidv4(),
+      name: req.body.name
+    }
+  );
 
   newUser.save()
-    .then(user => res.json(user));
+    .then(user => res.json(user))
+    .catch(err => { throw err });
 });
 
 export default router;
