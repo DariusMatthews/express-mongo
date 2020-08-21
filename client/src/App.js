@@ -5,6 +5,14 @@ function App() {
   const [users, setUsers] = useState(null);
   const [name, setName] = useState('');
 
+  const fetchUsers = () => {
+    // GET users when mounted and when users updates
+    fetch('/api/users')
+      .then(res => res.json())
+      .then(users => setUsers(users))
+      .catch(err => console.log(err));
+  }
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -22,12 +30,22 @@ function App() {
     setName('');
   }
 
-  useEffect(() => {
-    // GET users when mounted and when users updates
-    fetch('/api/users')
+  const handleDelete = (e) => {
+    const { id } = e.target.dataset;
+
+    // DELETE user on click
+    fetch(`/api/users/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
       .then(res => res.json())
-      .then(users => setUsers(users))
-      .catch(err => console.log(err))
+      .catch(err => { throw err });
+  }
+
+  useEffect(() => {
+    fetchUsers();
   }, [users])
 
   return (
@@ -37,7 +55,10 @@ function App() {
         : users.length
           ? users.map((user, i) => (
             <ul>
-              <li key={i}>{user.name}</li>
+              <li key={i}>
+                <h2>{user.name}</h2>
+                <input type="Button" onClick={handleDelete} defaultValue="Delete" data-id={user._id} />
+              </li>
             </ul>))
           : <h1>No Users Found</h1>
       }
