@@ -11,7 +11,7 @@ const app = Express();
 const port = process.env.PORT;
 
 app.use(Express.json());
-app.use(Express.urlencoded({ extended: true }));
+app.use(Express.urlencoded({ extended: false }));
 
 mongoose.connect(process.env.DB_URI, {
   useNewUrlParser: true,
@@ -20,7 +20,10 @@ mongoose.connect(process.env.DB_URI, {
   .then(() => console.log('mongo connected'))
   .catch(err => console.log(err));
 
+// Use api user routes
 app.use('/api/users', users);
+
+// hello world on home route
 app.get('/', (req, res) => {
   res.send('Hello World');
 });
