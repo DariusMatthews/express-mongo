@@ -23,9 +23,4 @@ mongoose.connect(process.env.DB_URI, {
 // Use api user routes
 app.use('/api/users', users);
 
-// hello world on home route
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
-
 app.listen(port, () => console.log('Server connected..'));

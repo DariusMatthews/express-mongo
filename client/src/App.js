@@ -30,7 +30,7 @@ function App() {
     setName('');
   }
 
-  const handleDelete = (e) => {
+  const handleDelete = e => {
     const { id } = e.target.dataset;
 
     // DELETE user on click
@@ -50,22 +50,33 @@ function App() {
 
   return (
     <div className="App">
-      {users === null
-        ? <p>Loading Users...</p>
-        : users.length
-          ? users.map((user, i) => (
-            <ul>
+      <ul>
+        {users === null
+          ? <p>Loading Users...</p>
+          : users.length
+            ? users.map((user, i) => (
               <li key={i}>
                 <h2>{user.name}</h2>
-                <input type="Button" onClick={handleDelete} defaultValue="Delete" data-id={user._id} />
-              </li>
-            </ul>))
-          : <h1>No Users Found</h1>
-      }
+                <input
+                  type="Button"
+                  onClick={handleDelete}
+                  defaultValue="Delete"
+                  data-id={user._id}
+                />
+              </li>)) 
+            : <h1>No Users Found</h1>
+        }
+      </ul>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">Name:</label>
-        <input type="text" name="name" value={name} placeholder="Enter name.." onChange={e => setName(e.target.value)} />
+        <input
+          type="text"
+          name="name"
+          value={name}
+          placeholder="Enter name.."
+          onChange={e => setName(e.target.value)}
+        />
         <input type="submit" value="submit" />
       </form>
     </div>
